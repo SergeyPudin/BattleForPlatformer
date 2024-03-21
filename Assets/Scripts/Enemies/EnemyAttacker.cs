@@ -50,12 +50,14 @@ public class EnemyAttacker : MonoBehaviour
 
     private IEnumerator Attack(Health health)
     {
+        WaitForSeconds waitForSeconds = new WaitForSeconds(_loadTime);
+
         while (true)
         {
             health.TakeDamage(_damage);
             _animatorChanger.Attack();
 
-            yield return new WaitForSeconds(_loadTime);
+            yield return waitForSeconds;
         }
     }
 }

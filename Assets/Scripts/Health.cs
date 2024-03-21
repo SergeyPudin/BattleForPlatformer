@@ -8,15 +8,15 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        int minValue = 0;
+        int maxValue = _health;
+
         if (_isDead == false)
         {
-            _health -= damage;
+            _health = Mathf.Clamp(_health - damage, minValue, maxValue);
 
-            if (_health <= 0)
-            {
-                _health = 0;
+            if (_health <= 0)            
                 Die();
-            }
         }
     }
 

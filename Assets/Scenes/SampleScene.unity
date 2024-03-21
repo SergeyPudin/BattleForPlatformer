@@ -4426,7 +4426,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: -6.71, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6077,7 +6077,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1908134131}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04, y: 0.5, z: 0}
+  m_LocalPosition: {x: -6.72, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6175,7 +6175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rockPrefab: {fileID: 8784383239277531552, guid: 231c0e1e43e694f4fac2c0c5048c788c, type: 3}
   _throwForce: 400
-  _loadTime: 2
+  _loadTime: 1
 --- !u!114 &1908134142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6188,7 +6188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b61838fdee0974483a6b5f7576b621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 1
+  _health: 2
 --- !u!114 &1908134143
 MonoBehaviour:
   m_ObjectHideFlags: 0

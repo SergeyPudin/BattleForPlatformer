@@ -36,13 +36,15 @@ public class PlayerAttacker : MonoBehaviour
 
     private IEnumerator DelayedAttack()
     {
+        WaitForSeconds waitForSeconds = new WaitForSeconds(_loadTime);
+
         if (_isLoaded && Input.GetKeyDown(KeyCode.Space))
         {
             _isLoaded = false;
 
             Throw();
 
-            yield return new WaitForSeconds(_loadTime);
+            yield return waitForSeconds;
 
             _isLoaded = true;
         }
