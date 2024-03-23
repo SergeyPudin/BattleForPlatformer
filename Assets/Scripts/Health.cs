@@ -2,20 +2,19 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private int _health;
+    [SerializeField] private int _currentHealth;
+    [SerializeField] private int _maxHealthValue;
 
+    private int _minHealthValue = 0;
     private bool _isDead = false;
 
     public void TakeDamage(int damage)
     {
-        int minValue = 0;
-        int maxValue = _health;
-
         if (_isDead == false)
         {
-            _health = Mathf.Clamp(_health - damage, minValue, maxValue);
+            _currentHealth = Mathf.Clamp(_currentHealth - damage, _minHealthValue, _maxHealthValue);
 
-            if (_health <= 0)            
+            if (_currentHealth <= 0)            
                 Die();
         }
     }
@@ -23,7 +22,7 @@ public class Health : MonoBehaviour
     public void Heal(int healthPoint)
     {
         if (_isDead == false)
-            _health += healthPoint;
+            _currentHealth = Mathf.Clamp(_currentHealth + healthPoint, _minHealthValue, _maxHealthValue);
     }
 
     private void Die()

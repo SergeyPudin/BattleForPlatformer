@@ -3,10 +3,9 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class EnemyAnimatorChanger : MonoBehaviour
 {
-    private const int _runIndex = 0;    
-    private const int _attackIndex = 1;
+    private const string Running = "Run";    
+    private const string Attacking = "Attack";
 
-    private int _actionIndex = Animator.StringToHash("ActionIndex");    
     private Animator _animator;
 
     private void Awake()
@@ -16,11 +15,11 @@ public class EnemyAnimatorChanger : MonoBehaviour
 
     public void Attack()
     {
-        _animator.SetInteger(_actionIndex, _attackIndex);
+        _animator.SetTrigger(Attacking);
     }
 
     public void Run()
     {
-        _animator.SetInteger(_actionIndex, _runIndex);
+        _animator.SetBool(Running, true);
     }
 }

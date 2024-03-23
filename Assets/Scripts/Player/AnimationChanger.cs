@@ -3,12 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class AnimationChanger : MonoBehaviour
 {
-    private const int IdleIndex = 0;
-    private const int RunIndex = 1;
-    private const int JumpIndex = 2;
-    private const int AttackIndex = 3;
+    private const string Running = "Run";
+    private const string Jumping = "Jump";
+    private const string Attacking = "Attack";
 
-    private int _moveIndex = Animator.StringToHash("MoveIndex");   
     private Animator _animator;
 
     private void Start()
@@ -18,21 +16,21 @@ public class AnimationChanger : MonoBehaviour
 
     public void Run()
     {
-        _animator.SetInteger(_moveIndex, RunIndex);
-    }
-
-    public void Jump()
-    {
-        _animator.SetInteger(_moveIndex, JumpIndex);
+        _animator.SetBool(Running, true);
     }
 
     public void Idle()
     {
-        _animator.SetInteger(_moveIndex, IdleIndex);
+        _animator.SetBool(Running, false);
+    }
+
+    public void Jump()
+    {
+        _animator.SetTrigger(Jumping);
     }
 
     public void Attack()
     {
-        _animator.SetInteger(_moveIndex, AttackIndex);
+        _animator.SetTrigger(Attacking);
     }
 }
