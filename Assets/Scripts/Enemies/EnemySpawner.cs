@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private Transform[] _wayPoints;
     [SerializeField] private Enemy _enemyPrefab;
     [SerializeField] private Player _player;
+    [SerializeField] private EnemyHealthBar _enemyHealthBarPrefab;
 
     private void Awake()
     {
@@ -29,7 +31,7 @@ public class EnemySpawner : MonoBehaviour
     {
         int waypointQuantity = 2;
         Transform[] wayPoints = new Transform[waypointQuantity];
-                
+
         for (int i = 0; i < wayPoints.Length; i++)
         {
             wayPoints[i] = (Transform)remainingWayPoints.Dequeue();
@@ -45,5 +47,21 @@ public class EnemySpawner : MonoBehaviour
         enemy.TryGetComponent(out EnemyMover mover);
         mover.SetWaypoints(waypoints);
         mover.SetPlayer(_player);
+
+        SpawnHealthBar(enemy);
+    }
+
+    private void SpawnHealthBar(Enemy enemy)
+    {
+        if (FindObjectOfType<Canvas>().transform)
+        {
+            EnemyHealthBar enemyHealthBar = Instantiate(_enemyHealthBarPrefab, transform.position, Quaternion.identity, FindObjectOfType<Canvas>().transform);
+
+            EnemyHealthBarPosition healthBarPosition = enemyHealthBar.GetComponent<EnemyHealthBarPosition>();
+            SmoothSliderView smoothSliderView = enemy.GetComponent<SmoothSliderView>();
+
+            healthBarPosition.GetEnemy(enemy);
+            smoothSliderView.GetSlider(enemyHealthBar.GetComponent<Slider>());
+        }
     }
 }
