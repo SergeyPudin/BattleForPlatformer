@@ -46,8 +46,8 @@ public class PlayerMover : MonoBehaviour
 
         if (_isGrounded && verticalDirection > 0)
         {
-            _rigidbody.AddForce(Vector2.up * _jumpForce);
             _animationChanger.Jump();
+            _rigidbody.AddForce(Vector2.up * _jumpForce);
         }
     }
 

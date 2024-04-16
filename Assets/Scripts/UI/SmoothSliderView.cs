@@ -9,6 +9,13 @@ public class SmoothSliderView : AbstractIndicatorViewer
 
     private Coroutine _moveCoroutine;
     private float _previusValue;
+    private float _epsilon = 0.5f;
+
+    private void Update()
+    {
+        if (_slider.value < _epsilon)
+           _slider.value = 0;
+    }
 
     public void GetSlider(Slider slider)
     {

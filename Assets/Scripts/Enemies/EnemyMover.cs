@@ -16,7 +16,7 @@ public class EnemyMover : MonoBehaviour
     private Transform _target;
     private SpriteRenderer _spriteRenderer;
     private EnemyAttacker _enemyAttacker;
-
+   
     private float _lastPosition;
     private float _lastDirection;
 
@@ -31,7 +31,7 @@ public class EnemyMover : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _enemyAttacker = GetComponent<EnemyAttacker>();
-
+        
         _lastPosition = transform.position.x;
     }
 

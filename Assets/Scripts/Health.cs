@@ -11,6 +11,7 @@ public class Health : MonoBehaviour, IChangeValue
 
     public event UnityAction<int, int> OnValueChanged;
     public event UnityAction<int, int> Reset;
+    public event UnityAction Dyed;
 
     private void Start()
     {
@@ -29,6 +30,13 @@ public class Health : MonoBehaviour, IChangeValue
         }
     }
 
+    public void Die()
+    {
+        _isDead = true;
+
+       Dyed?.Invoke();
+    }
+
     public void Heal(int healthPoint)
     {
         if (_isDead == false)
@@ -36,12 +44,5 @@ public class Health : MonoBehaviour, IChangeValue
             _currentHealth = Mathf.Clamp(_currentHealth + healthPoint, _minHealthValue, _maxHealthValue);
             OnValueChanged?.Invoke(_currentHealth, _maxHealthValue);
         }
-    }
-
-    private void Die()
-    {
-        _isDead = true;
-
-        Destroy(gameObject);
     }
 }

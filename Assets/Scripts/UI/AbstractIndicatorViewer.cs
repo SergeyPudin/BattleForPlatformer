@@ -27,7 +27,7 @@ public abstract class AbstractIndicatorViewer : MonoBehaviour
     protected abstract void SetStartValues(int value, int maxValue);
 
     protected abstract void Display();
-   
+
     protected virtual void UpdateValue(int value, int maxValue)
     {
         CurrentValue = value;
