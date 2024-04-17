@@ -2,20 +2,14 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SmoothSliderView : AbstractIndicatorViewer
-{
-    [SerializeField] private Slider _slider;
+public class SmoothSliderView : IndicatorViewer
+{ 
     [SerializeField] private float _slideDuration;
 
+    private Slider _slider;
     private Coroutine _moveCoroutine;
     private float _previusValue;
     private float _epsilon = 0.5f;
-
-    private void Update()
-    {
-        if (_slider.value < _epsilon)
-           _slider.value = 0;
-    }
 
     public void GetSlider(Slider slider)
     {
