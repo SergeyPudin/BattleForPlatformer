@@ -15,7 +15,7 @@ public class SmoothSliderView : IndicatorViewer
         _slider = slider;
     }
 
-    protected override void SetStartValues(int value, int maxValue)
+    protected override void SetStartValues(float value, float maxValue)
     {
         _slider.value = (float)value / maxValue;
 

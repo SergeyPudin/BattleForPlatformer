@@ -3,14 +3,14 @@ using UnityEngine.Events;
 
 public class Health : MonoBehaviour, IChangeValue
 {
-    [SerializeField] private int _currentHealth;
-    [SerializeField] private int _maxHealthValue;
+    [SerializeField] private float _currentHealth;
+    [SerializeField] private float _maxHealthValue;
 
-    private int _minHealthValue = 0;
+    private float _minHealthValue = 0;
     private bool _isDead = false;
 
-    public event UnityAction<int, int> OnValueChanged;
-    public event UnityAction<int, int> Reset;
+    public event UnityAction<float, float> OnValueChanged;
+    public event UnityAction<float, float> Reset;
     public event UnityAction Dyed;
 
     private void Start()
@@ -18,7 +18,7 @@ public class Health : MonoBehaviour, IChangeValue
         Reset?.Invoke(_currentHealth, _maxHealthValue);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         if (_isDead == false)
         {
@@ -37,7 +37,7 @@ public class Health : MonoBehaviour, IChangeValue
        Dyed?.Invoke();
     }
 
-    public void Heal(int healthPoint)
+    public void Heal(float healthPoint)
     {
         if (_isDead == false)
         {

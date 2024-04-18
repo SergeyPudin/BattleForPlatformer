@@ -2,6 +2,6 @@ using UnityEngine.Events;
 
 public interface IChangeValue
 {
-    event UnityAction<int, int> OnValueChanged;
-    event UnityAction<int, int> Reset;
+    event UnityAction<float, float> OnValueChanged;
+    event UnityAction<float, float> Reset;
 }

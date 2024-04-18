@@ -24,11 +24,11 @@ public abstract class IndicatorViewer : MonoBehaviour
         ChangeValue.Reset += SetStartValues;
     }
 
-    protected abstract void SetStartValues(int value, int maxValue);
+    protected abstract void SetStartValues(float value, float maxValue);
 
     protected abstract void Display();
 
-    protected virtual void UpdateValue(int value, int maxValue)
+    protected virtual void UpdateValue(float value, float maxValue)
     {
         TargetValue = (float)value / maxValue;
 
