@@ -1,8 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(AnimationChanger))]
-[RequireComponent(typeof(PlayerMover))]
+[RequireComponent(typeof(AnimationChanger), typeof(PlayerMover))]
 public class PlayerAttacker : MonoBehaviour
 {
     [SerializeField] private Rock _rockPrefab;

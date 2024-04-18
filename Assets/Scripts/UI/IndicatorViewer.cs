@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract class IndicatorViewer : MonoBehaviour
 {
     protected int MaxValue;
-    protected float CurrentValue;
+    protected float TargetValue;
     protected IChangeValue ChangeValue;
 
     private void Awake()
@@ -30,8 +30,7 @@ public abstract class IndicatorViewer : MonoBehaviour
 
     protected virtual void UpdateValue(int value, int maxValue)
     {
-        CurrentValue = value;
-        MaxValue = maxValue;
+        TargetValue = (float)value / maxValue;
 
         Display();
     }

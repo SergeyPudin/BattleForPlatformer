@@ -1,8 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Health))]
-[RequireComponent(typeof(EnemyAnimatorChanger))]
-[RequireComponent (typeof(EnemyMover))]
+[RequireComponent(typeof(Health), typeof(EnemyAnimatorChanger), typeof(EnemyMover))]
 public class Bear : MonoBehaviour
 {
     private Health _health;

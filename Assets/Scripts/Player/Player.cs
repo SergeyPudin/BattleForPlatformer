@@ -1,7 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Health))]
-[RequireComponent (typeof(AnimationChanger))]
+[RequireComponent(typeof(Health), typeof(AnimationChanger))]
 public class Player : MonoBehaviour 
 {
     private Health _health;

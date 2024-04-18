@@ -3,14 +3,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SmoothSliderView : IndicatorViewer
-{ 
+{
     [SerializeField] private float _slideDuration;
 
     private Slider _slider;
     private Coroutine _moveCoroutine;
     private float _previusValue;
-    private float _epsilon = 0.5f;
-
+   
     public void GetSlider(Slider slider)
     {
         _slider = slider;
@@ -18,17 +17,13 @@ public class SmoothSliderView : IndicatorViewer
 
     protected override void SetStartValues(int value, int maxValue)
     {
-        MaxValue = maxValue;
-        _previusValue = value;
+        _slider.value = (float)value / maxValue;
 
-        _slider.maxValue = maxValue;
-        _slider.value = value;
+        _previusValue = _slider.value;
     }
 
     protected override void Display()
     {
-        _slider.maxValue = MaxValue;
-
         _moveCoroutine = StartCoroutine(SmoothSlide());
     }
 
@@ -38,13 +33,13 @@ public class SmoothSliderView : IndicatorViewer
 
         while (elapsed < _slideDuration)
         {
-            _slider.value = Mathf.MoveTowards(_previusValue, CurrentValue, elapsed / _slideDuration);
+            _slider.value = Mathf.MoveTowards(_previusValue, TargetValue, elapsed / _slideDuration);
             elapsed += Time.deltaTime;
 
             yield return null;
         }
 
-        _previusValue = CurrentValue;
+        _previusValue = TargetValue;
         _moveCoroutine = null;
     }
 }

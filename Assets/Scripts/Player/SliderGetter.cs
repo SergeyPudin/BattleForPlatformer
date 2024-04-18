@@ -8,7 +8,7 @@ public class SliderGetter : MonoBehaviour
 
     private SmoothSliderView _sliderView;
 
-    private void Start()
+    private void Awake()
     {
         _sliderView = GetComponent<SmoothSliderView>();
 

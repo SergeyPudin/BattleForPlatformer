@@ -1,8 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(EnemyAttacker))]
+[RequireComponent(typeof(SpriteRenderer), typeof(Rigidbody2D), typeof(EnemyAttacker))]
 public class EnemyMover : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;

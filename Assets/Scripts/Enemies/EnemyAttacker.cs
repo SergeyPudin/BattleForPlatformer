@@ -1,8 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(EnemyMover))]
-[RequireComponent(typeof(EnemyAnimatorChanger))]
+[RequireComponent(typeof(EnemyMover), typeof(EnemyAnimatorChanger))]
 public class EnemyAttacker : MonoBehaviour
 {
     [SerializeField] private int _damage;
