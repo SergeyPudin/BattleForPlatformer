@@ -4,31 +4,26 @@ using UnityEngine;
 [RequireComponent(typeof(Health))]
 public class Vampirism : MonoBehaviour
 {
-    [SerializeField] private float _radius = 3.0f;
+    [SerializeField] private float _vampirismRadius = 3.0f;
     [SerializeField] private float _vampirismTime = 6.0f;
     [SerializeField] private float _damagePerSecond = 1.0f / 6;
-    [SerializeField] private float _healingKoeficient = 0.5f;
+    [SerializeField] private float _healingCoefficient = 0.5f;
 
+    private float _elapsedVampirismTime;
+    private float _elapsedHealingTime;
+    
+    private Coroutine _vampirismCoroutine;
+    private Coroutine _healingCoroutine;
     private Health _health;
-    private float _elapsedTime;
-    private float _elapsedTimeTakeHealth;
-    private Coroutine _coroutine;
-    private Coroutine _takeHealth;
-
-    private void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.Q))
-            StoleHealth();
-    }
 
     private void Start()
     {
         _health = GetComponent<Health>();
     }
 
-    private void StoleHealth()
+    public void PerformVampirism()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _radius);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _vampirismRadius);
 
         foreach (var hit in hits)
         {
@@ -36,11 +31,11 @@ public class Vampirism : MonoBehaviour
             {
                 if (enemy.TryGetComponent(out Health health))
                 {
-                    float damage = _damagePerSecond * Time.deltaTime;
-                    float healPoints = damage * _healingKoeficient;
+                    float damage = _damagePerSecond * Time.fixedDeltaTime;
+                    float healPoints = damage * _healingCoefficient;
 
-                    _coroutine = StartCoroutine(SuckHealth(health, damage));
-                    _takeHealth = StartCoroutine(TakeHealth(healPoints));
+                    _vampirismCoroutine = StartCoroutine(InflictDamage(health, damage));
+                    _healingCoroutine = StartCoroutine(TakeHealth(healPoints));
                 }
             }
         }
@@ -48,31 +43,32 @@ public class Vampirism : MonoBehaviour
 
     private IEnumerator TakeHealth(float healPoints)
     {
-        _elapsedTimeTakeHealth = _vampirismTime;
+        _elapsedHealingTime = _vampirismTime;
 
-        while (_elapsedTimeTakeHealth > 0)
+        while (_elapsedHealingTime > 0)
         {
             _health.Heal(healPoints);
-            _elapsedTimeTakeHealth -= Time.deltaTime;
 
-            yield return null;
+            _elapsedHealingTime -= Time.fixedDeltaTime; 
+
+            yield return new WaitForFixedUpdate();
         }
 
-        _takeHealth = null;
+        _healingCoroutine = null;
     }
 
-    private IEnumerator SuckHealth(Health health, float damage)
+    private IEnumerator InflictDamage(Health health, float damage)
     {
-        _elapsedTime = _vampirismTime;
+        _elapsedVampirismTime = _vampirismTime;
 
-        while (_elapsedTime > 0)
+        while (_elapsedVampirismTime > 0)
         {
             health.TakeDamage(damage);
-            _elapsedTime -= Time.deltaTime;
+            _elapsedVampirismTime -= Time.fixedDeltaTime;
 
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
 
-        _coroutine = null;
+        _vampirismCoroutine = null;
     }
 }

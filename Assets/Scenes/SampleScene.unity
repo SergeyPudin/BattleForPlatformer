@@ -6373,6 +6373,7 @@ GameObject:
   - component: {fileID: 1908134141}
   - component: {fileID: 1908134139}
   - component: {fileID: 1908134137}
+  - component: {fileID: 1908134147}
   - component: {fileID: 1908134140}
   - component: {fileID: 1908134143}
   - component: {fileID: 1908134144}
@@ -6655,8 +6656,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e72f1a8876c1534f9283be0b8a39351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radius: 5
+  _vampirismRadius: 3
+  _vampirismTime: 6
   _damagePerSecond: 0.16666667
+  _healingCoefficient: 0.5
+--- !u!114 &1908134147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1908134131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88fc21d4a4764954f8b3c056586717ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1972539048
 GameObject:
   m_ObjectHideFlags: 0
