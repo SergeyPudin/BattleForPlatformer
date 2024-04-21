@@ -10,6 +10,7 @@ public class PlayerAttacker : MonoBehaviour
 
     private AnimationChanger _animationChanger;
     private PlayerMover _playerMover;
+    private Coroutine _attackCoroutine;
 
     private bool _isLoaded = true;
 
@@ -19,16 +20,15 @@ public class PlayerAttacker : MonoBehaviour
         _animationChanger = GetComponent<AnimationChanger>();
     }
 
-    private void Update()
-    {        
-            StartCoroutine(DelayedAttack());
+    public void Throw()
+    {
+        _attackCoroutine = StartCoroutine(DelayedAttack());
     }
 
-    private void Throw()
+    private void CreateRock()
     {
         Rock currentRock;
 
-        _animationChanger.Attack();
         currentRock = Instantiate(_rockPrefab, transform.position, Quaternion.identity);
         currentRock.SetVelocity(_throwForce, _playerMover.IsRight);
     }
@@ -37,15 +37,18 @@ public class PlayerAttacker : MonoBehaviour
     {
         WaitForSeconds waitForSeconds = new WaitForSeconds(_loadTime);
 
-        if (_isLoaded && Input.GetKeyDown(KeyCode.Space))
+        if (_isLoaded)
         {
             _isLoaded = false;
 
-            Throw();
+            CreateRock();
+            _animationChanger.Attack();
 
             yield return waitForSeconds;
 
             _isLoaded = true;
         }
+
+        _attackCoroutine = null;
     }
 }
