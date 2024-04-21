@@ -12,7 +12,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Q))
-            _vampirism.PerformVampirism();
+        if (Input.GetKeyUp(KeyCode.Q) && _vampirism != null)
+            _vampirism.enabled = true;
     }
 }

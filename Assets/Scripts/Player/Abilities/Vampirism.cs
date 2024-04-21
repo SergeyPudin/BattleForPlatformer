@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Health))]
@@ -8,67 +7,66 @@ public class Vampirism : MonoBehaviour
     [SerializeField] private float _vampirismTime = 6.0f;
     [SerializeField] private float _damagePerSecond = 1.0f / 6;
     [SerializeField] private float _healingCoefficient = 0.5f;
+    [SerializeField] private CircleCollider2D _collider;
 
-    private float _elapsedVampirismTime;
-    private float _elapsedHealingTime;
-    
-    private Coroutine _vampirismCoroutine;
-    private Coroutine _healingCoroutine;
+    private float _elapsedTime;
+
     private Health _health;
+    private Enemy _enemy;
 
     private void Start()
     {
-        _health = GetComponent<Health>();
+        _health = GetComponent<Health>();        
+        _collider.radius = _vampirismRadius;
     }
 
-    public void PerformVampirism()
+    private void OnEnable()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _vampirismRadius);
+        _elapsedTime = _vampirismTime;
+        _collider.enabled = true;
+    }
 
-        foreach (var hit in hits)
+    private void OnDisable()
+    {
+        _collider.enabled = false;
+    }
+
+    private void Update()
+    {
+        if (_elapsedTime > 0)
         {
-            if (hit.TryGetComponent(out Enemy enemy))
-            {
-                if (enemy.TryGetComponent(out Health health))
-                {
-                    float damage = _damagePerSecond * Time.fixedDeltaTime;
-                    float healPoints = damage * _healingCoefficient;
-
-                    _vampirismCoroutine = StartCoroutine(InflictDamage(health, damage));
-                    _healingCoroutine = StartCoroutine(TakeHealth(healPoints));
-                }
-            }
+            _elapsedTime -= Time.deltaTime;
         }
-    }
-
-    private IEnumerator TakeHealth(float healPoints)
-    {
-        _elapsedHealingTime = _vampirismTime;
-
-        while (_elapsedHealingTime > 0)
+        else
         {
-            _health.Heal(healPoints);
-
-            _elapsedHealingTime -= Time.fixedDeltaTime; 
-
-            yield return new WaitForFixedUpdate();
+            enabled = false;
         }
 
-        _healingCoroutine = null;
-    }
-
-    private IEnumerator InflictDamage(Health health, float damage)
-    {
-        _elapsedVampirismTime = _vampirismTime;
-
-        while (_elapsedVampirismTime > 0)
+        if (_enemy != null)
         {
+            float damage = _damagePerSecond* Time.deltaTime;
+            float healpoint = damage * _healingCoefficient;
+            
+            _enemy.TryGetComponent<Health>(out Health health);
+
             health.TakeDamage(damage);
-            _elapsedVampirismTime -= Time.fixedDeltaTime;
-
-            yield return new WaitForFixedUpdate();
+            _health.Heal(healpoint);
         }
+    }
 
-        _vampirismCoroutine = null;
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<Enemy>(out Enemy enemy))
+        {
+            _enemy = enemy;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<Enemy>(out Enemy enemy))
+        {
+            _enemy = null;
+        }
     }
 }
