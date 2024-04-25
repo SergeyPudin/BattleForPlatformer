@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(AnimationChanger), typeof(Rigidbody2D), typeof(SpriteRenderer))]
+[RequireComponent(typeof(Vampirism), typeof(PlayerAttacker))]
 public class PlayerMover : MonoBehaviour
 {
     private const string Horizontal = "Horizontal";
@@ -15,6 +16,8 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float _runSpeed;
     [SerializeField] private float _jumpForce;
 
+    private Vampirism _vampirism;
+    private PlayerAttacker _playerAttacker;
     private AnimationChanger _animationChanger;
     private Rigidbody2D _rigidbody;
     private bool _isGrounded = true;
@@ -28,6 +31,8 @@ public class PlayerMover : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _animationChanger = GetComponent<AnimationChanger>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _vampirism = GetComponent<Vampirism>();
+        _playerAttacker = GetComponent<PlayerAttacker>();
     }
 
     private void FixedUpdate()
@@ -36,6 +41,15 @@ public class PlayerMover : MonoBehaviour
 
         Run();
         Jump();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Q) && _vampirism != null)
+            _vampirism.enabled = true;
+
+        if (Input.GetKeyUp(KeyCode.Space))
+            _playerAttacker.Throw();
     }
 
     private void Jump()

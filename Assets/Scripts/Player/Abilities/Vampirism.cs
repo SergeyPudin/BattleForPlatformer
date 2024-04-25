@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Health))]
@@ -13,8 +14,7 @@ public class Vampirism : MonoBehaviour
     private float _elapsedTime;
 
     private Health _playersHealth;
-    private Health _enemysHealth;
-    private Enemy _enemy;
+    private List<Health> _enemyHealts = new();
 
     private void Awake()
     {
@@ -50,13 +50,16 @@ public class Vampirism : MonoBehaviour
             enabled = false;
         }
 
-        if (_enemy != null)
+        if (_enemyHealts.Count > 0)
         {
             float damage = _damagePerSecond * Time.fixedDeltaTime;
             float healpoint = damage * _healingCoefficient;
 
-            _enemysHealth.TakeDamage(damage);
-            _playersHealth.Heal(healpoint);
+            foreach (Health health in _enemyHealts)
+            {
+                health.TakeDamage(damage);
+                _playersHealth.Heal(healpoint);
+            }
         }
     }
 
@@ -64,8 +67,7 @@ public class Vampirism : MonoBehaviour
     {
         if (collision.TryGetComponent<Enemy>(out Enemy enemy) && enemy.TryGetComponent<Health>(out Health health))
         {
-            _enemy = enemy;
-            _enemysHealth = health;
+            _enemyHealts.Add(health);
         }
     }
 
@@ -73,8 +75,7 @@ public class Vampirism : MonoBehaviour
     {
         if (collision.TryGetComponent<Enemy>(out Enemy enemy))
         {
-            _enemy = null;
-            _enemysHealth = null;
+            _enemyHealts.Remove(enemy.GetComponent<Health>());
         }
     }
 }
