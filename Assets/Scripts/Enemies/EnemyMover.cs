@@ -75,7 +75,7 @@ public class EnemyMover : MonoBehaviour
 
     private void TryChangeRotation(float direction)
     {
-        _spriteRenderer.flipX = direction < 0 ? true : false;
+        _spriteRenderer.flipX = direction < 0;
         _lastDirection = direction;
     }
 

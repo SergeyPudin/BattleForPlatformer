@@ -39,6 +39,9 @@ public class Rock : MonoBehaviour
 
     private float GetDirection(bool isRight)
     {
-        return isRight ? 1 : -1;
+        int right = 1;
+        int left = -1;
+
+        return isRight ? right : left;
     }
 }
