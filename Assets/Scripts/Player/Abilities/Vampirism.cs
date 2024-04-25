@@ -12,16 +12,17 @@ public class Vampirism : MonoBehaviour
 
     private float _elapsedTime;
 
-    private Health _health;
+    private Health _playersHealth;
+    private Health _enemysHealth;
     private Enemy _enemy;
 
     private void Awake()
     {
         float diametr = _vampirismRadius * 2;
 
-        _health = GetComponent<Health>();        
+        _playersHealth = GetComponent<Health>();
         _collider.radius = _vampirismRadius;
-        _circle.localScale = Vector3.one * diametr;        
+        _circle.localScale = Vector3.one * diametr;
         _circle.gameObject.SetActive(false);
     }
 
@@ -38,11 +39,11 @@ public class Vampirism : MonoBehaviour
         _circle.gameObject.SetActive(false);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (_elapsedTime > 0)
         {
-            _elapsedTime -= Time.deltaTime;
+            _elapsedTime -= Time.fixedDeltaTime;
         }
         else
         {
@@ -51,21 +52,20 @@ public class Vampirism : MonoBehaviour
 
         if (_enemy != null)
         {
-            float damage = _damagePerSecond* Time.deltaTime;
+            float damage = _damagePerSecond * Time.fixedDeltaTime;
             float healpoint = damage * _healingCoefficient;
-            
-            _enemy.TryGetComponent<Health>(out Health health);
 
-            health.TakeDamage(damage);
-            _health.Heal(healpoint);
+            _enemysHealth.TakeDamage(damage);
+            _playersHealth.Heal(healpoint);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Enemy>(out Enemy enemy))
+        if (collision.TryGetComponent<Enemy>(out Enemy enemy) && enemy.TryGetComponent<Health>(out Health health))
         {
             _enemy = enemy;
+            _enemysHealth = health;
         }
     }
 
@@ -74,6 +74,7 @@ public class Vampirism : MonoBehaviour
         if (collision.TryGetComponent<Enemy>(out Enemy enemy))
         {
             _enemy = null;
+            _enemysHealth = null;
         }
     }
 }
